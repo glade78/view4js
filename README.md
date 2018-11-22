@@ -44,5 +44,6 @@ EcmaScript6 UI targeted for enterprise web application and hybrid mobile applica
 ## Comparison with existing UI frameworks: Can be use with Vue.js and React.js in components. Although it does not require as making component is not big effort in ES6. 
 
 ## How to Use it
-  Sample Application will coming soon.
+  Please have a look in 
+  [View4js Sample Application](https://github.com/glade78/view4js-sampleapp)
 	

@@ -1,0 +1,29 @@
+{
+    "name": "view4js",
+    "version": "1.0.0",
+    "description": "",
+    "keywords": [],
+    "author": "glade",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "module": "index",
+    "jsnext:main": "index",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "rollup -c"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-plugin-external-helpers": "^6.22.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-latest": "^6.24.1",
+        "babel-preset-stage-1": "^6.24.1",
+        "rollup": "^0.63.5",
+        "rollup-plugin-babel": "^3.0.7",
+        "rollup-plugin-commonjs": "^9.1.4",
+        "rollup-plugin-node-resolve": "^3.3.0"
+    }
+}

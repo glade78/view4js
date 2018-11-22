@@ -34,7 +34,7 @@ EcmaScript6 UI targeted for enterprise web application and hybrid mobile applica
 		  2. HTML Element to JavaScript Object
 		  3. JavaScript Object to JavaScript Object
 		  4. Support chain binding
-			5. Input Element binds to->Model Object binds to -> Label Element
+	          5. Input Element binds to->Model Object binds to -> Label Element
 		  6. Custom property binding and event to trigger binding event.
 		  7. Model to view binding
 		  8. Prevent Memory Leak

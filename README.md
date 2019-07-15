@@ -1,4 +1,3 @@
-# view4js
  
 EcmaScript6 UI targeted for enterprise web application and hybrid mobile application SDK with following features.
 
@@ -42,6 +41,9 @@ EcmaScript6 UI targeted for enterprise web application and hybrid mobile applica
 ## Learning Curve: Very Less.
 ## Customization: Highly customizable. 
 ## Comparison with existing UI frameworks: Can be use with Vue.js and React.js in components. Although it does not require as making component is not big effort in ES6. 
+
+## API Documentation
+[View4Js API] (https://glade78.github.io/view4js/index.html)
 
 ## How to Use it
   Please have a look in 

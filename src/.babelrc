@@ -1,13 +1,5 @@
 {
     "presets": [
-        "stage-1", [
-            "latest", {
-                "es2015": {
-                    "modules": false
-                }
-            }
-        ]
-    ],
-    "plugins": ["external-helpers"]
-
-}
+      ["@babel/env", {"modules": false}]
+    ]
+  }

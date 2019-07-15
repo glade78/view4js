@@ -1,9 +1,56 @@
-class EventRouter {
+/** 
+ * @license
+ * Copyright (c) 2019 Gaurang Lade
+ * 
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
+
+/**
+ * EventRouter
+ */
+
+ class EventRouter {
+
+
+    /**
+     * @description EventRouter holds and manages array of event routes
+     * Event Routes are used by ViewNavigator to find associated View and Viewstack
+     * @param {array} [_routes=[]] - Events routes array
+     * @memberof EventRouter
+     */
     constructor(_routes = []) {
         this.routes = _routes;
     }
 
+
+    /**
+     *
+     * @description Adds new Event Route
+     * @param {string} _navEvent - Navigation Event Name
+     * @param {string} _viewstackId - ViewStack ID
+     * @param {string} _viewId -  View ID
+     * @param {string} _path -  Navigator Route path associted 
+     * @memberof EventRouter
+     */
     addRoute(_navEvent, _viewstackId, _viewId, _path) {
         let route = {};
         route.navEvent = _navEvent;
@@ -13,6 +60,14 @@ class EventRouter {
         this.routes.push(route);
     }
 
+
+    /**
+     *
+     * @description find Event Route using Naviagtion EventName
+     * @param {string} _navEvent
+     * @returns {Object} Event Route Object
+     * @memberof EventRouter
+     */
     findRoute(_navEvent) {
         let tmpRoute = [];
         for (let x = 0; x < this.routes.length; x++) {
@@ -22,6 +77,15 @@ class EventRouter {
         return tmpRoute;
     }
 
+
+    /**
+     *
+     * @description finds associated view by Navigation EventName and Path
+     * @param {string} _navEvent
+     * @param {string} _path
+     * @returns {string} - ViewID 
+     * @memberof EventRouter
+     */
     findViewId(_navEvent, _path) {
         let tmpViewId = [];
         for (let i = 0; i < this.routes.length; i++) {
@@ -31,6 +95,15 @@ class EventRouter {
         return tmpViewId;
     }
 
+
+    /**
+     *
+     * @description finds associated viewstack by Navigation EventName and Path
+     * @param {string} _navEvent
+     * @param {string} _path
+     * @returns {string} - ViewStackID
+     * @memberof EventRouter
+     */
     findViewStackId(_navEvent, _path) {
         let tmpViewStackId = null;
         for (let j = 0; j < this.routes.length; j++) {
@@ -40,10 +113,22 @@ class EventRouter {
         return tmpViewStackId;
     }
 
+
+    /**
+     *
+     * @description Remove and Resets existing event routes
+     * @memberof EventRouter
+     */
     reset() {
         this.routes = [];
     }
 
+
+    /**
+     *
+     * @description prints Event Routes
+     * @memberof EventRouter
+     */
     printRoutes() {
         if (this.routes.length > 0) {
             for (let i = 0; i < this.routes.length; i++) {

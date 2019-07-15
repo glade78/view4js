@@ -1,3 +1,28 @@
+/** 
+ * @license
+ * Copyright (c) 2019 Gaurang Lade
+ * 
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 import EventDispatcher from "../../createjs/EventDispatcher";
 import ClassError from '../utils/ClassError';
 import Router from './Router';
@@ -5,13 +30,32 @@ import ViewNavigator from './ViewNavigator';
 import EventBroadCaster from '../events/EventBroadcaster';
 import EventUtils from '../utils/EventUtils';
 
+/**
+ *
+ * ViewManager
+ * @extends {EventDispatcher}
+ */
 class ViewManager extends EventDispatcher {
+
+
+    /**
+     * @description ViewManager manages ViewNavigator.It Subscribe to EventBroadcaster's Navigation channel to receive navigation change events.
+     * ViewManager find ViewNavigator based on Path Routes data and it match route info received in navigation change event.
+     * 
+     * @memberof ViewManager
+     */
     constructor() {
         super();
         this.preinitialize();
         this.initialize();
     }
 
+
+    /**
+     * @description preinitialize navigators,router etc.
+     * @private
+     * @memberof ViewManager
+     */
     preinitialize() {
         this.navigators = {};
         this.currentNavigatorIds = [];
@@ -20,10 +64,32 @@ class ViewManager extends EventDispatcher {
         EventBroadCaster.navEventChannel.addEventListener(EventUtils.NAV_CHANGE_EVENT, event => { this.handleNavChangeEvent(event); });
     }
 
-    //Overrides by SubClass
+    /**
+     * @description Implement by subclass to initialise 
+     * @override
+     * @public
+     * @memberof ViewManager
+     */
     initialize() {
 
     }
+
+    /**
+     * @description 
+     * Viewmanager find Viewnavigator based on Routes info set in Router Object
+     * 
+     * @example Sample Router Object is 
+     * [
+     *      { path: "/path1", navigatorId: "Navigator1",parentId: "root" },
+     *      { path: "/path2", navigatorId: "Navigator2",parentId: "root" },
+     *  ]
+     * 
+     * @description Here path is routeID, navigatorID is viewNavigatorId, 
+     * parentId is DOM Element Id or ViewId in case of Nested View Navigators
+     * By Default Main DOM Element have id="root"
+     * 
+     * @memberof ViewManager
+     */
 
     set routes(_router) {
         if (!_router instanceof Router) {
@@ -32,19 +98,38 @@ class ViewManager extends EventDispatcher {
         this.router = _router;
     }
 
+
     get routes() {
         return this.router;
     }
 
-    //Overrides by SubClass
+    /**
+     * @description ViewManager calls createNavigator method when ViewNavigator is not created yet. 
+     * @param {string} _navigatorId - ViewNavigatorId
+     * @param {string} _parentId - ParentId is DOM Element id or ViewID
+     * @returns {Object} - New Instance of ViewNavigator
+     * @memberof ViewManager
+     */
     createNavigator(_navigatorId, _parentId) {
         return new ViewNavigator(_navigatorId, _parentId);
     }
 
+    /**
+     * @description ViewManager maintains navigators object in Key, Value form.
+     * Where key is viewNavigatorID and value is ViewNavigator Object Instance
+     * @param {Object} _navigator - ViewNavigator
+     * @param {string} _navigatorId - ViewNavigatorID
+     * @memberof ViewManager
+     */
     addNavigator(_navigator, _navigatorId) {
         this.navigators[_navigatorId] = _navigator;
     }
 
+    /**
+     * @returns {Object} - ViewNavigator Object Instance by ViewNavigatorId.
+     * @param {string} _navigatorId - ViewNavigatorID
+     * @memberof ViewManager
+     */
     getNavigator(_navigatorId) {
         let tmpnavNav = null;
         if (this.navigators[_navigatorId] != null)
@@ -52,39 +137,25 @@ class ViewManager extends EventDispatcher {
         return tmpnavNav;
     }
 
-    get ActiveNavigator() {
-        return this.currentNavigatorId;
-    }
-    set ActiveNavigator(_navigatorId) {
-        this.currentNavigatorId = _navigatorId
-    }
-
-
+    /**
+     * @returns {Object} - ViewNavigator by Route 
+     * @param {string} _route - Path Route Name
+     * @memberof ViewManager 
+     */
     findRouteNavigator(_route) {
         let tmpNavigatorIds = this.router.findNavigator(_route);
         return tmpNavigatorIds;
     }
 
+    /**
+     * @returns {string} - ParentID of ViewNavigator 
+     * @param {string} _navigatorId - ViewNavigatorID
+     * @memberof ViewManager
+     */
     getNavigatorParent(_navigatorId) {
         let tmpNavParentId = this.router.findNavigatorParent(_navigatorId);
         return tmpNavParentId;
     }
-
-    /**
-     * - UseCase for Trigger multiple navigation view change for same "path" Navigation
-		  { path: "/main/dashboard", navigatorId: DashBoardNavigator"}
-          { path: "/main/dashboard", navigatorId: StatusNavigator"}
-        
-        - UseCase Check any current Navigator Exist , then hide or destroy it 
-          Then Launch new navigator 
-
-        //Done
-        - UseCase for Nested Navigation
-        { path: "/account/help", navigatorId: "HelpNavigator",parent:"MainNavigator" }
-        
-       
-     * 
-     */
 
     handleNavChangeEvent(e) {
         let route = e.route;
@@ -92,7 +163,7 @@ class ViewManager extends EventDispatcher {
         let navparams = e.params;
         let navigatorIds = this.findRouteNavigator(route);
         if (navevent == EventUtils.BACK_NAV_EVENT) {
-            // No Need to destoy / hide navigator assuming its same navigator
+            // No Need to destroy / hide navigator assuming its same navigator
             this.changeBackNavigation(navigatorIds, route);
         } else {
             this.currentRoute = route;
@@ -101,6 +172,14 @@ class ViewManager extends EventDispatcher {
     }
 
 
+    /**
+     * @description 
+     * changeBackNavigation change from current view to one previous view of viewstack by calling navigateBack method of multiple ViewNavigators associated same path route.
+     * @private
+     * @param {Array} _navigatorIds - Array of ViewNavigators.
+     * @param {String} _route - Path route
+     * @memberof ViewManager
+     */
     changeBackNavigation(_navigatorIds, _route) {
         if (_navigatorIds.length > 0) {
             for (let j = 0; j < _navigatorIds.length; j++) {
@@ -112,7 +191,16 @@ class ViewManager extends EventDispatcher {
 
     }
 
-
+    /**
+     * @description 
+     * changeNavigation method called when ViewManager Receive Forward Navigation Event
+     * @private
+     * @param {Array} _navigatorIds - NavigatorId Array
+     * @param {String} _route - Navigation Route / Path 
+     * @param {Event} _navevent - Navigation Event
+     * @param {Object} _navparams - Navigation Parameters pass to ViewNavigator
+     * @memberof ViewManager
+     */
     changeNavigation(_navigatorIds, _route, _navevent, _navparams) {
         this.checkAndDestroyNavigators(_navigatorIds, _route);
         if (_navigatorIds.length > 0) {
@@ -134,6 +222,13 @@ class ViewManager extends EventDispatcher {
 
     }
 
+    /**
+     * @description removes unused navigators.
+     * @private
+     * @param {Array} _navigatorIds - NavigatorId Array 
+     * @param {String} _route Navigation Route / Path 
+     * @memberof ViewManager
+     */
     checkAndDestroyNavigators(_navigatorIds, _route) {
         let unusedNavigators = [];
         if (_navigatorIds.length > 0) {
@@ -149,6 +244,15 @@ class ViewManager extends EventDispatcher {
         this.destroyUnusedNavigators(unusedNavigators);
     }
 
+    /**
+     * @description
+     * checkUnusedNavigator will check if ViewNavigator is used or unused.
+     * @private
+     * @param {string} _currentnavId 
+     * @param {Array} _navigatorIds
+     * @returns {string} - unused navigatorid
+     * @memberof ViewManager 
+     */
     checkUnusedNavigator(_currentnavId, _navigatorIds) {
         let unused = true;
         for (let n = 0; n < _navigatorIds.length; n++) {
@@ -159,6 +263,12 @@ class ViewManager extends EventDispatcher {
         return unused;
     }
 
+    /**
+     * @description destroy unused Navigators
+     * @private
+     * @param {Array} _unusedNavigators 
+     * @memberof ViewManager
+     */
     destroyUnusedNavigators(_unusedNavigators) {
         if (_unusedNavigators.length > 0) {
             for (let p = 0; p < _unusedNavigators.length; p++) {
@@ -168,6 +278,11 @@ class ViewManager extends EventDispatcher {
         }
     }
 
+    /**
+     * @description removes ViewNavigator object instance from navigators array.
+     * @param {String} _navigatorId - NavigatorId
+     * @memberof ViewManager
+     */
     removeNavigator(_navigatorId) {
         let tmpnav = this.navigators[_navigatorId];
         tmpnav.destroy();
@@ -175,6 +290,11 @@ class ViewManager extends EventDispatcher {
         this.navigators[_navigatorId] = null;
     };
 
+    /**
+     *
+     * @todo Implment destroy method
+     * @memberof ViewManager
+     */
     destroyAll() {
         //TODO
     }

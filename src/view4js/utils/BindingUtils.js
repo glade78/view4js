@@ -1,5 +1,59 @@
+/** 
+ * @license
+ * Copyright (c) 2019 Gaurang Lade
+ * 
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+
+/**
+ * BindingUtil
+ * 
+ * 
+ */
 class BindingUtil {
 
+    /**
+     * @description 
+     * BindingUtils provides One-way and Two-way binding with Just single statement.
+     * BindingUtils is Singleton class.
+     * 
+     * @example Add Binding :
+    BindingUtils.addBinding(srcele, "value", "change", destele, "value", false);
+ 
+            @example Remove Binding :
+        BindingUtils.removeBinding(srcele, "value");
+        
+        @example Chain Binding :
+        DOM Element to JavaScript Object :
+        BindingUtils.addBinding(srcele, "value", "change", this.myCustomModel, "setValue", false);
+
+        JavaScript Object to DOM Element :
+        BindingUtils.addBinding(this.myCustomModel, "getValue", "change", destele, "value", false);
+        
+        @example Two-way Binding :
+        BindingUtils.addBinding(srcele, "value", "change", destele, "value", true);
+ 
+     * @memberof BindingUtil
+     */
     constructor() {
         if (!BindingUtil.instance) {
             BindingUtil.instance = this;
@@ -10,6 +64,17 @@ class BindingUtil {
     }
 
 
+
+    /**
+     *
+     * @private
+     * @param {object} _srcObj - Source DOM Element or Object
+     * @param {string} _srcProp - Source Property
+     * @param {string} _evtname - Source Object EventName on which Binding Trigger 
+     * @param {object} _targObj - Target DOM Element or Object
+     * @param {string} _targProp - Target Property
+     * @memberof BindingUtil
+     */
     Binds(_srcObj, _srcProp, _evtname, _targObj, _targProp) {
         let srcObject = new Object();
         let srcPropStr = _srcProp + "prop";
@@ -54,6 +119,7 @@ class BindingUtil {
         Obj.addEventListener(_evtname, (e) => { this.synchronise(e); });
     }
 
+    
     synchronise(event) {
         event.preventDefault();
         let srcObjfrmEvt = event.target;
@@ -112,6 +178,20 @@ class BindingUtil {
         return tarObject;
     }
 
+
+    /**
+     * @description - Add Binding method binds Source Object property with Target Object Property with Synchronize on SourceObject Event
+     * @public
+     * @param {object} _srcObj - Source DOM Element or Object
+     * @param {string} _srcProp - Source Property
+     * @param {string} _evtname - Source Object EventName on which Binding Trigger 
+     * @param {object} _targObj - Target DOM Element or Object
+     * @param {string} _targProp - Target Property
+     * @param {Boolean} twoway - True when Binding is Two-way
+     * @example Add Binding :
+ BindingUtils.addBinding(srcele, "value", "change", destele, "value", false);
+     * @memberof BindingUtil
+     */
     addBinding(srcObj, srcProp, evtname, targObj, targProp, twoway) {
         this.Binds(srcObj, srcProp, evtname, targObj, targProp);
         if (twoway) {
@@ -119,7 +199,18 @@ class BindingUtil {
         }
     }
 
-    removeBinding(srcObj, evtname) {
+
+    /**
+     * 
+     * @description - Add Binding method binds Source Object property with Target Object Property with Synchronize on SourceObject Event
+     * @public
+     * @param {object} _srcObj - Source DOM Element or Object
+     * @param {string} _evtname - Source Object EventName on which Binding Trigger 
+     * @example Remove Binding :
+ BindingUtils.removeBinding(srcele, "value");
+     * @memberof BindingUtil
+     */
+    removeBinding(_srcObj, _evtname) {
         // determine is it dom element or plain object
         let srcObject;
         if (srcObj == null)

@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: Component</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: Component</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>Component<span class="signature">(_id<span class="signature-attributes">opt</span>, _parentViewId<span class="signature-attributes">opt</span>, _parentContainerId<span class="signature-attributes">opt</span>, _createDOMElement<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Component</div>
+        
+    
+</header>
+
+<article>
+	
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>EventDispatcher</li>
+    </ul>
+
+
+    
+	
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="Component"><span class="type-signature"></span>new Component<span class="signature">(_id<span class="signature-attributes">opt</span>, _parentViewId<span class="signature-attributes">opt</span>, _parentContainerId<span class="signature-attributes">opt</span>, _createDOMElement<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates an instance of Component.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">ComponentID</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_parentViewId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Component Parent View ID</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_parentContainerId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Component Parent Container ID</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_createDOMElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">True if Component DOM element create from Template , False if taken from DOM.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+		
+		<table class="params">
+			<thead>
+				<tr>
+					 <th>Name</th>
+					 <th class="last">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>componentElement</td>
+					<td>returns Component DOM Element</td>
+				</tr>
+				
+				<tr>
+					<td>currentState</td>
+					<td>returns Component current state</td>
+				</tr>
+				
+				<tr>
+					<td>enabled</td>
+					<td>Boolean Property , returns True if Component is Enabled</td>
+				</tr>
+				
+				<tr>
+					<td>parentContainer</td>
+					<td>returns Parent Container ID</td>
+				</tr>
+				
+				<tr>
+					<td>parentView</td>
+					<td>returns ParentViewID</td>
+				</tr>
+				
+				<tr>
+					<td>readOnly</td>
+					<td>returns True if Component is ResdyOnly</td>
+				</tr>
+				
+				<tr>
+					<td>required</td>
+					<td>returns True if Component is Required</td>
+				</tr>
+				
+				<tr>
+					<td>visible</td>
+					<td>Boolean Property , returns True if Component is Visible</td>
+				</tr>
+				
+			</tbody>
+		</table>
+        <br>
+		<br>
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+		
+		<table class="params">
+			<thead>
+				<tr>
+					 <th>Name</th>
+					 <th class="last">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td><a href="#addEventHandler">addEventHandler</a></td>
+					<td>Add Event Handlers for Component DOM Elements and ModelCall by attach & set domElement Method</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#addToComponentElement">addToComponentElement</a></td>
+					<td>Add Component Content DOM Element to Component</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#attach">attach</a></td>
+					<td>Component Lifecycle MethodCall by View or call manually attach Responsible to render component content, listners etcDispatch "ATTACHED_EVENT" when view got attached / rendered Following methods call by attach methodcreateDOMContentaddViewHandlerbind</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#bind">bind</a></td>
+					<td>Overrides by SubClassBind Component Properties with Model or other Componentscall by attach & view</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#changeComponentState">changeComponentState</a></td>
+					<td>change Component StateOverrides by Subclass</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#changeState">changeState</a></td>
+					<td>change Component State</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#createDOMContent">createDOMContent</a></td>
+					<td>creates DOM Contents of ComponentOverrides by SubClassCall by attach Method</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#destroy">destroy</a></td>
+					<td>Overrides by SubClassDestroy Method used to cleanup component resourcesCall by View or call manually to destroy viewRemove Event Handlers, Make Properties null, Remove DOM Element contents and its reference.</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#detach">detach</a></td>
+					<td>Component Lifecycle MethodCall by View or call manually Component will be remove if Component is attached</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#init">init</a></td>
+					<td>Initialise Component properties and modelCall by View or Parent</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#initComponent">initComponent</a></td>
+					<td>call by init method</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#refresh">refresh</a></td>
+					<td>Refresh Component data and model and event listnersOverrides by SubClass</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#removeEventHandler">removeEventHandler</a></td>
+					<td>Remove Event Handlers for Component DOM Elements and Modelcall by destroy method</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#setComponentEnabled">setComponentEnabled</a></td>
+					<td>Overrides by Subclass</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#setComponentReadOnly">setComponentReadOnly</a></td>
+					<td>Overrides by Subclass</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#setComponentRequired">setComponentRequired</a></td>
+					<td>Overrides by Subclass</td>
+				</tr>
+				
+				<tr>
+					<td><a href="#unBind">unBind</a></td>
+					<td>Overrides by SubClassRemove Bind on Component Properties with Model or other Components</td>
+				</tr>
+				
+			</tbody>
+		</table>
+        <br>
+		<br>
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addEventHandler"><span class="type-signature"></span>addEventHandler<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Add Event Handlers for Component DOM Elements and ModelCall by attach & set domElement Method
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addToComponentElement"><span class="type-signature"></span>addToComponentElement<span class="signature">(_tmpCompContentEl)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Add Component Content DOM Element to Component
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_tmpCompContentEl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">DOMElement</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="attach"><span class="type-signature"></span>attach<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Component Lifecycle MethodCall by View or call manually attach Responsible to render component content, listners etcDispatch "ATTACHED_EVENT" when view got attached / rendered Following methods call by attach methodcreateDOMContentaddViewHandlerbind
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line261">line 261</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="bind"><span class="type-signature"></span>bind<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Overrides by SubClassBind Component Properties with Model or other Componentscall by attach & view
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="changeComponentState"><span class="type-signature"></span>changeComponentState<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    change Component StateOverrides by Subclass
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line174">line 174</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="changeState"><span class="type-signature"></span>changeState<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    change Component State
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line165">line 165</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createDOMContent"><span class="type-signature"></span>createDOMContent<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    creates DOM Contents of ComponentOverrides by SubClassCall by attach Method
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line86">line 86</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="destroy"><span class="type-signature"></span>destroy<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Overrides by SubClassDestroy Method used to cleanup component resourcesCall by View or call manually to destroy viewRemove Event Handlers, Make Properties null, Remove DOM Element contents and its reference.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line312">line 312</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="detach"><span class="type-signature"></span>detach<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Component Lifecycle MethodCall by View or call manually Component will be remove if Component is attached
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line288">line 288</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="init"><span class="type-signature"></span>init<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initialise Component properties and modelCall by View or Parent
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initComponent"><span class="type-signature"></span>initComponent<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    call by init method
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="refresh"><span class="type-signature"></span>refresh<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Refresh Component data and model and event listnersOverrides by SubClass
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line303">line 303</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="removeEventHandler"><span class="type-signature"></span>removeEventHandler<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Remove Event Handlers for Component DOM Elements and Modelcall by destroy method
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line115">line 115</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setComponentEnabled"><span class="type-signature"></span>setComponentEnabled<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Overrides by Subclass
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line231">line 231</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setComponentReadOnly"><span class="type-signature"></span>setComponentReadOnly<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Overrides by Subclass
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line213">line 213</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setComponentRequired"><span class="type-signature"></span>setComponentRequired<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Overrides by Subclass
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line191">line 191</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="unBind"><span class="type-signature"></span>unBind<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Overrides by SubClassRemove Bind on Component Properties with Model or other Components
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view4js_core_Component.js.html">view4js/core/Component.js</a>, <a href="view4js_core_Component.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">View4js</a></h2><h3>Classes</h3><ul><li><a href="BindingUtil.html">BindingUtil</a></li><li><a href="ClassError.html">ClassError</a></li><li><a href="Component.html">Component</a></li><li><a href="Container.html">Container</a></li><li><a href="core.Event.html">Event</a></li><li><a href="core.EventDispatcher.html">EventDispatcher</a></li><li><a href="ElementState.html">ElementState</a></li><li><a href="ElementUtils.html">ElementUtils</a></li><li><a href="EventBroadCaster.html">EventBroadCaster</a></li><li><a href="EventChannel.html">EventChannel</a></li><li><a href="EventRouter.html">EventRouter</a></li><li><a href="EventUtils.html">EventUtils</a></li><li><a href="GenericEvent.html">GenericEvent</a></li><li><a href="InstanceId.html">InstanceId</a></li><li><a href="NavigationEvent.html">NavigationEvent</a></li><li><a href="Router.html">Router</a></li><li><a href="View.html">View</a></li><li><a href="ViewManager.html">ViewManager</a></li><li><a href="ViewNavigator.html">ViewNavigator</a></li><li><a href="ViewStack.html">ViewStack</a></li></ul>
+</nav>
+
+<br class="clear">
+
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

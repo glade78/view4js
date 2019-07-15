@@ -1,10 +1,60 @@
+/** 
+ * @license
+ * Copyright (c) 2019 Gaurang Lade
+ * 
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+
 import EventDispatcher from "../../createjs/EventDispatcher";
 import ElementUtils from '../utils/ElementUtils';
 import ViewStack from './ViewStack';
 import View from './View';
 import EventRouter from './EventRouter';
 
+/**
+ * 
+ * ViewNavigator
+ * @extends {EventDispatcher}
+ */
 class ViewNavigator extends EventDispatcher {
+
+    /**
+     * @description
+     * UI navigation  manages by ViewNavigator. 
+     * 
+     * ViewNavigator" is base class which have simple view navigation functionality.
+     * 
+     * ViewNavigator manages set of view using stack-based history mechanism which also called as ViewStack.
+     * 
+     * Each Viewstack represent its own view history stack. So View4Js supports multiple history stack too.
+     * 
+     * ViewNavigator also Manages LifeCycle of View.
+     *
+     * @param {String} _id - ViewNavigator ID
+     * @param {String} [_parentId=null] - Parent ID View or "root" DOM Element
+     * @todo {Boolean} _navigationHistory - Enable or Disable Navigation History. 
+     * If true ViewNavigator will keep View History.
+     * @memberof ViewNavigator
+     */
     constructor(_id, _parentId = null) {
         super();
         this.id = _id;
@@ -15,53 +65,92 @@ class ViewNavigator extends EventDispatcher {
         this.activeRoute = null;
         this.views = {};
         this.viewstacks = {};
-        this.eventroute = new EventRouter();
+        this.eventRoute = new EventRouter();
         this.isRendered = false;
         this.history = true;
         this.initNavigator();
     }
 
-    //Overrides by SubClass
+    /**
+     * @description Implemented by Subclass 
+     * Call by ViewNavigator Constructor
+     * @override
+     * @memberof ViewNavigator
+     */
     initNavigator() {
 
     }
 
+    /**
+     * @description Set EventRouter for ViewNavigator, EventRouter is useful for EventBased Navigation and for navigation of single view or multiple views.
+     * @param {Object} _router - EventRouter
+     * @memberof ViewNavigator
+     */
     set eventRouter(_router) {
         if (!_router instanceof EventRouter) {
             throw new ClassError("ViewNavigator", "Wrong Type of Router");
         }
-        this.eventroute = _router;
+        this.eventRoute = _router;
     }
 
+    /**
+     * @description Returns EventRouter instance of ViewNavigator
+     * @returns {object} - EventRouter Instance
+     * @readonly
+     * @memberof ViewNavigator
+     */
     get eventRouter() {
-        return this.eventroute;
+        return this.eventRoute;
     }
 
-    //Overrides by SubClass
+    /**
+     * 
+     * @description 
+     * By Default View class will be created
+     * When Overrides by Subclass , custom Views will be created
+     * @override
+     * @param {String} _viewId - View ID
+     * @param {String} _route - Navigation Route / Path 
+     * @param {String} _navparams - Navigation Parameters pass to View
+     * @param {String} _viewStackId - Parent Viewstack ID of View
+     * @returns {Object} - View Instance
+     * @memberof ViewNavigator
+     */
     createView(_viewId, _route, _navparams, _viewStackId) {
         return new View(_viewId, _route, _navparams, _viewStackId);
     }
 
-    //Overrides by SubClass
+    /**
+     * @description 
+     * By Default ViewStack class will be created
+     * When Overrides by Subclass , custom Viewstack will be created 
+     * @override
+     * @param {String} _viewStackId - ViewStack ID
+     * @param {String} _route - Navigation Route / Path 
+     * @param {String} _parentId - Parent ViewNavigator ID
+     * @returns {Object} - ViewStack Instance
+     * @memberof ViewNavigator
+     */
     createViewStack(_viewStackId, _route, _parentId) {
         return new ViewStack(_viewStackId, _route, _parentId);
     }
 
-
-
-    // TODO : Check any current view and viewstack Exist , then hide or destroy it 
-    // Then Launch new viewstack and view 
+    /**
+     * @description 
+     * Call by ViewManager
+     * Navigation Route and Navigation EventRoute Combination must be unique
+     * @param {String} _route - Navigation Route
+     * @param {String} _navevent - Navigation Event Route 
+     * @param {String} _navparams - Parameters pass to View
+     * @memberof ViewNavigator
+     */
     navigate(_route, _navevent, _navparams) {
         let tmpviewStackId = null;
         if (this.history == false) {
             this.navigateBack(_route);
         }
 
-        //TODO Find ViewStack and View by using NavEventName 
-
-        // Find or Create ViewStack
-        // Route and NavEvent Combination must be unique
-        tmpviewStackId = this.eventroute.findViewStackId(_navevent, _route);
+        tmpviewStackId = this.eventRoute.findViewStackId(_navevent, _route);
         let tmpViewStack = this.getViewStack(tmpviewStackId);
         if (tmpViewStack == null)
             tmpViewStack = this.createViewStack(tmpviewStackId, _route, this.id);
@@ -72,12 +161,11 @@ class ViewNavigator extends EventDispatcher {
         this.activeViewStackId = tmpviewStackId;
         this.viewstacks[tmpviewStackId] = tmpViewStack;
 
-        //let tmpNewRoute = this.eventroute.findRoute(_navevent);
-        let tmpviewId = this.eventroute.findViewId(_navevent, _route);
+        let tmpviewId = this.eventRoute.findViewId(_navevent, _route);
         let tmpView = this.getView(tmpviewId);
         if (tmpView == null)
             tmpView = this.createView(tmpviewId, _route, _navparams, tmpviewStackId);
-        //tmpView.submitEvent(tmpNewRoute.navEvent); // For Testing Purpose Only;
+
         let tmpViewStackEl = tmpViewStack.getViewStackElement();
         tmpView.attachView(tmpViewStackEl); // will construct Element and add it to DOM parent
         tmpViewStack.pushViewElement(tmpviewId, this.views);
@@ -87,7 +175,13 @@ class ViewNavigator extends EventDispatcher {
         this.activeRoute = _route;
     }
 
-    /* Navigate Back View */
+    /**
+     * @description 
+     * Call by ViewManager or ViewNavigator internally
+     * Navigate back to previous View if history set to true
+     * @param {String} _route
+     * @memberof ViewNavigator 
+     */
     navigateBack(_route) {
         if (_route == this.activeRoute) {
             let tmpViewStack = this.getViewStack(this.activeViewStackId);
@@ -108,28 +202,58 @@ class ViewNavigator extends EventDispatcher {
         }
     }
 
-    //TODO
+    /**
+     * @description Navigate Back to Specific View
+     * @param {String} _viewId - View ID
+     * @todo To be Implemented
+     * @memberof ViewNavigator
+     */
     navigateBackToView(_viewId) {
 
     }
 
-    //TODO
+    /**
+     * @description Navigate to Specific View
+     * @param {String} _viewId - View ID
+     * @todo To be Implemented
+     * @memberof ViewNavigator
+     */
     navigateToView(_viewId) {
 
     }
 
+    /**
+     * @description Get ViewStack Object by ViewStackId
+     * @param {String} _viewStackId - ViewStackID
+     * @returns {Object} - ViewStack Instance
+     * @memberof ViewNavigator
+     */
     getViewStack(_viewStackId) {
         let tmpVstack = null;
         tmpVstack = this.viewstacks[_viewStackId];
         return tmpVstack;
     }
 
+    /**
+     * @description Get ViewObject by ViewId
+     * @param {string} _viewId - ViewID
+     * @returns {Object} - View Instance
+     * @memberof ViewNavigator
+     */
     getView(_viewId) {
         let tmpV = null;
         tmpV = this.views[_viewId];
         return tmpV;
     }
 
+    /**
+     * @description 
+     * ViewNavigator Lifecycle Method,
+     * Call by ViewManager,
+     * Render ViewNavigator DOM Content
+     * @public
+     * @memberof ViewNavigator
+     */
     render() {
         if (!this.isRendered) {
             this.renderNavigator();
@@ -137,6 +261,12 @@ class ViewNavigator extends EventDispatcher {
         }
     }
 
+    /**
+     *
+     * @description Renders, ViewNavigator DOM Element , it call by Render Method 
+     * @private
+     * @memberof ViewNavigator
+     */
     renderNavigator() {
         let tmpParentId = this.parentId;
         let tmpParentElement = null;
@@ -155,11 +285,28 @@ class ViewNavigator extends EventDispatcher {
 
     }
 
-    //Overrides by SubClass
+    
+    /**
+     * @description Render Navigator Subclass DOM Element content
+     * @private
+     * @override
+     * @memberof ViewNavigator
+     */
     renderNavigatorContent() {}
 
 
-
+    /**
+     * 
+     * @description 
+     * ViewNavigator Lifecycle Method,
+     * Call by ViewManager to destroy ViewNavigator,
+     * Remove Event Handlers, Make Properties null, 
+     * Remove Views and Viewstack objects.
+     * Remove ViewNavigator DOM Element and Its Contents
+     * Remove EventRoute Object
+     * @public
+     * @memberof ViewNavigator
+     */
     destroy() {
         for (let viewObj in this.views) {
             let tmpview = this.views[viewObj];
@@ -183,15 +330,10 @@ class ViewNavigator extends EventDispatcher {
         this.activeViewId = null;
         this.activeViewStackId = null;
         this.activeRoute = null;
-        this.eventroute = null;
+        this.eventRoute = null;
         this.isRendered = false;
 
     }
-
-
-
-
-
 
 }
 

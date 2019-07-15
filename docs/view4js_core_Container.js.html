@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: view4js/core/Container.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: view4js/core/Container.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+ * @license
+ * Copyright (c) 2019 Gaurang Lade
+ * 
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+import EventDispatcher from "../../createjs/EventDispatcher";
+import EventUtils from '../utils/EventUtils';
+import ElementUtils from '../utils/ElementUtils';
+
+/**
+ *
+ * Container
+ * @extends {EventDispatcher}
+ */
+class Container extends EventDispatcher {
+
+    /**
+     * @description Container contains View4Js Components
+     * @param {string} [_id=null]
+     * @param {string} [_parentViewId=null]
+     * @param {boolean} [_createDOMElement=true]
+     * @memberof Container
+     */
+    constructor(_id = null, _parentViewId = null, _createDOMElement = true) {
+        super();
+        this.isEnabled= false;
+        this.createDOMElement = _createDOMElement;
+        this.id = _id;
+        if((_id == null)|| (_id == ""))
+            this.id = ElementUtils.generateContainerId();
+        this.parentViewId = _parentViewId;
+    }
+    
+    /**
+     *
+     * @override
+     * @memberof Container
+     */
+    initContainer(){
+        
+    }
+    
+    /**
+     *
+     * @description Call by View or Parent
+     * @public
+     * @memberof Container
+     */
+    init() {
+		this.initContainer();
+	}
+
+    /**
+     * @description Call by attach Method
+     * @override
+     * @memberof Container
+     */
+    createDOMContent() {
+
+    }
+
+    /**
+     *
+     * @description Get Container HTML Content
+     * @readonly
+     * @memberof Container
+     */
+    get containerElement() {
+        let tmpContainerEl = null;
+        if (this.isAttached) {
+            tmpContainerEl = ElementUtils.container(this.id);
+        }
+        return tmpContainerEl;
+    }
+   
+
+    /**
+     *
+     * @description Returns Parent ViewID
+     * @readonly
+     * @memberof Container
+     */
+    get parent(){
+        return this._parentViewId;
+    }
+
+
+    /**
+     * @description Returns true if Container is enabled
+     * @returns {Boolean} 
+     * @readonly 
+     * @memberof Container
+     */
+    get enabled() {
+        return this.isEnabled;
+    }
+
+
+    set enabled(_isenabled = false){
+        this.isEnabled = _isenabled;
+    }
+
+    /**
+     * Boolean Property , returns True if Component is Visible
+     * @returns {Boolean} true if Container is visible
+     * @memberof Container
+     */
+    get visible(){
+        let tmpContainerEl = this.containerElement;
+        return ElementUtils.isVisible(tmpContainerEl);
+    }
+
+
+    set visible(_visible){
+        let tmpContainerEl = this.containerElement;
+        if(_visible)
+            ElementUtils.showElement(tmpContainerEl);
+        else 
+            ElementUtils.hideElement(tmpContainerEl);
+
+    }
+
+     // 
+
+     /**
+      * @description
+      * Container Lifecycle Method,
+      * Call by View or manually 
+      * 
+      * attachView Responsible to render view content, listners etc,
+      * 
+      * Dispatch "ATTACHED_EVENT" when view got attached / rendered
+      * @memberof Container
+      */
+     attach() {
+        if (!this.isAttached) {
+                parentEl = ElementUtils.view(this._parentViewId);
+            if(this.createDOMElement == true){
+                parentEl.insertAdjacentHTML('beforeend', ElementUtils.constructContainerBaseElement(this.id));
+                let tmpEle = this.element;
+                ElementUtils.hideElement(tmpEle);
+                //Create  Contents and Internal Components
+                this.createDOMContent();
+            }
+            this.enabled = true;
+            this.visible = true;
+            this.isAttached = true;
+            this.dispatchEvent(EventUtils.ATTACHED_EVENT);
+        }
+    }
+
+
+    /**
+     * @description
+     * Container Lifecycle Method
+     * 
+     * Call by View or Manually
+     * 
+     * Container will be remove if View is attached 
+     * @public
+     * @memberof Container  
+    */
+    detach() {
+        if (this.isAttached) {
+            let tmpContainerEl = this.componentElement;
+            tmpContainerEl.parentNode.removeChild(tmpContainerEl);
+            this.isAttached = false;
+            this.dispatchEvent(EventUtils.DETACHED_EVENT);
+        }
+    }
+
+    /**
+     *
+     * @description Call by View
+     * @override
+     * @memberof Container
+     */
+    refresh() {
+
+    }
+
+    /**
+     *
+     * @description Call by View
+     * @override
+     * @memberof Container
+     */
+    destroy() {
+        //TODO
+    }
+
+    
+
+}
+
+export default Container;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">View4js</a></h2><h3>Classes</h3><ul><li><a href="BindingUtil.html">BindingUtil</a></li><li><a href="ClassError.html">ClassError</a></li><li><a href="Component.html">Component</a></li><li><a href="Container.html">Container</a></li><li><a href="core.Event.html">Event</a></li><li><a href="core.EventDispatcher.html">EventDispatcher</a></li><li><a href="ElementState.html">ElementState</a></li><li><a href="ElementUtils.html">ElementUtils</a></li><li><a href="EventBroadCaster.html">EventBroadCaster</a></li><li><a href="EventChannel.html">EventChannel</a></li><li><a href="EventRouter.html">EventRouter</a></li><li><a href="EventUtils.html">EventUtils</a></li><li><a href="GenericEvent.html">GenericEvent</a></li><li><a href="InstanceId.html">InstanceId</a></li><li><a href="NavigationEvent.html">NavigationEvent</a></li><li><a href="Router.html">Router</a></li><li><a href="View.html">View</a></li><li><a href="ViewManager.html">ViewManager</a></li><li><a href="ViewNavigator.html">ViewNavigator</a></li><li><a href="ViewStack.html">ViewStack</a></li></ul>
+</nav>
+
+<br class="clear">
+
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

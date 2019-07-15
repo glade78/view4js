@@ -1,7 +1,8 @@
  
-EcmaScript6 UI targeted for enterprise web application and hybrid mobile application SDK with following features.
+View4Js is EcmaScript6 UI targeted for enterprise web application and hybrid mobile application SDK with following features.
 
-## License MIT
+## License 
+MIT
 
 ## Features
 		1. MV* Framework
@@ -38,9 +39,12 @@ EcmaScript6 UI targeted for enterprise web application and hybrid mobile applica
 		  7. Model to view binding
 		  8. Prevent Memory Leak
       
-## Learning Curve: Very Less.
-## Customization: Highly customizable. 
-## Comparison with existing UI frameworks: Can be use with Vue.js and React.js in components. Although it does not require as making component is not big effort in ES6. 
+## Learning Curve: 
+Very Less.
+## Customization: 
+Highly customizable. 
+## Comparison with existing UI frameworks: 
+Can be use with Vue.js and React.js in components. Although it does not require as making component is not big effort in ES6. 
 
 ## API Documentation
 [View4Js API] (https://glade78.github.io/view4js/index.html)

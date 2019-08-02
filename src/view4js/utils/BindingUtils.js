@@ -58,6 +58,8 @@ class BindingUtil {
         if (!BindingUtil.instance) {
             BindingUtil.instance = this;
             this.BindObjDictionary = {};
+            this.objCounter = 0;
+            this.bindObjIdPrefix = "bindobj";
         }
         return BindingUtil.instance;
 
@@ -79,14 +81,19 @@ class BindingUtil {
         let srcObject = new Object();
         let srcPropStr = _srcProp + "prop";
         let srcObjKey = null;
+        this.objCounter++;
+        let tmpId = this.bindObjIdPrefix+this.objCounter;
         if (_srcObj.nodeName) {
-            srcObjKey = _srcObj.id;
+            
+            srcObjKey = tmpId;//_srcObj.id;
             //TODO:: Following line will be enabled for data-id attribute
             // srcObjKey = _srcObj.dataset.id;
+            _srcObj.dataset.bindid = srcObjKey;
             this.addToBindDictionary(srcObjKey, _srcObj, _evtname);
             srcObject = this.BindObjDictionary[srcObjKey];
         } else {
-            srcObjKey = _srcObj;
+            srcObjKey = tmpId;
+            _srcObj.bindid = srcObjKey;
             this.addToBindDictionary(srcObjKey, _srcObj, _evtname);
             srcObject = this.BindObjDictionary[srcObjKey];
         }
@@ -125,10 +132,10 @@ class BindingUtil {
         let srcObjfrmEvt = event.target;
         let eleid;
         console.info(typeof srcObjfrmEvt);
-        if (srcObjfrmEvt.id) {
-            eleid = srcObjfrmEvt.id;
+        if (srcObjfrmEvt.bindid) {
+            eleid = srcObjfrmEvt.bindid;
         } else {
-            eleid = srcObjfrmEvt;
+            eleid = srcObjfrmEvt.dataset.bindid;
         }
         let srcObject = this.BindObjDictionary[eleid];
         let srcPropArrayLen = srcObject.srcPropArray.length;
@@ -213,21 +220,21 @@ class BindingUtil {
     removeBinding(_srcObj, _evtname) {
         // determine is it dom element or plain object
         let srcObject;
-        if (srcObj == null)
+        if (_srcObj == null)
             return;
-        if (srcObj.nodeName) {
-            let eleid = srcObj.id;
+        if (_srcObj.nodeName) {
+            let eleid = _srcObj.dataset.bindid;
             if (this.BindObjDictionary[eleid] != null) {
                 srcObject = this.BindObjDictionary[eleid];
                 this.removeListeners(srcObject);
             } else {
-                srcObject = this.BindObjDictionary[srcObj];
+                srcObject = this.BindObjDictionary[srcObj.bindid];
                 this.removeListeners(srcObject);
             }
 
         } else {
-            if (this.BindObjDictionary[srcObj] != null) {
-                srcObject = this.BindObjDictionary[srcObj];
+            if (this.BindObjDictionary[srcObj.bindid] != null) {
+                srcObject = this.BindObjDictionary[srcObj.bindid];
                 this.removeListeners(srcObject);
             }
         }
@@ -250,7 +257,5 @@ class BindingUtil {
 }
 
 const BindingUtilss = new BindingUtil();
-// prevents new properties from being added to the object
-Object.freeze(BindingUtilss);
 
 export default BindingUtilss;

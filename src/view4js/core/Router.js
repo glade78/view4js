@@ -61,7 +61,7 @@ class Router {
      *
      * @description finds associated Navigator by Path route Name
      * @param {string} _route
-     * @returns {string} - Navigator ID
+     * @returns {Array} - NavigatorID Array
      * @memberof Router
      */
     findNavigator(_route) {

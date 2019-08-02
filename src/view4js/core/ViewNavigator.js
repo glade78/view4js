@@ -51,7 +51,7 @@ class ViewNavigator extends EventDispatcher {
      *
      * @param {String} _id - ViewNavigator ID
      * @param {String} [_parentId=null] - Parent ID View or "root" DOM Element
-     * @todo {Boolean} _navigationHistory - Enable or Disable Navigation History. 
+     * @todo {Boolean} navigationHistory - Enable or Disable Navigation History. 
      * If true ViewNavigator will keep View History.
      * @memberof ViewNavigator
      */
@@ -67,7 +67,7 @@ class ViewNavigator extends EventDispatcher {
         this.viewstacks = {};
         this.eventRoute = new EventRouter();
         this.isRendered = false;
-        this.history = true;
+        this.navigationHistory = true;
         this.initNavigator();
     }
 
@@ -79,6 +79,18 @@ class ViewNavigator extends EventDispatcher {
      */
     initNavigator() {
 
+    }
+
+    /**
+     * Sets Navigation History 
+     * Boolean Property , returns True if Component is Enabled
+     */
+    get history() {
+        return this.navigationHistory;
+    }
+
+    set history(_navigationHistory = true){
+        this.navigationHistory = _navigationHistory;
     }
 
     /**
@@ -146,7 +158,7 @@ class ViewNavigator extends EventDispatcher {
      */
     navigate(_route, _navevent, _navparams) {
         let tmpviewStackId = null;
-        if (this.history == false) {
+        if (this.navigationHistory == false) {
             this.navigateBack(_route);
         }
 
@@ -164,8 +176,8 @@ class ViewNavigator extends EventDispatcher {
         let tmpviewId = this.eventRoute.findViewId(_navevent, _route);
         let tmpView = this.getView(tmpviewId);
         if (tmpView == null)
-            tmpView = this.createView(tmpviewId, _route, _navparams, tmpviewStackId);
-
+            tmpView = this.createView(tmpviewId, _route, _navevent, _navparams, tmpviewStackId);
+        this.removeActiveMenuElement();
         let tmpViewStackEl = tmpViewStack.getViewStackElement();
         tmpView.attachView(tmpViewStackEl); // will construct Element and add it to DOM parent
         tmpViewStack.pushViewElement(tmpviewId, this.views);
@@ -173,6 +185,7 @@ class ViewNavigator extends EventDispatcher {
         this.activeViewId = tmpviewId;
         this.views[tmpviewId] = tmpView;
         this.activeRoute = _route;
+        this.setActiveMenuElement(_navevent);
     }
 
     /**
@@ -190,13 +203,16 @@ class ViewNavigator extends EventDispatcher {
             tmpView.deActivateView();
             tmpView.detachView();
             tmpView.destroy();
+            this.removeActiveMenuElement();
             tmpView = null; // make garbage collected
             this.views[this.activeViewId] = null;
             delete this.views[this.activeViewId];
-            if (this.history == true) {
+            if (this.navigationHistory == true) {
                 this.activeViewId = tmpViewStack.getActiveViewId();
                 let tmpViewBack = this.views[this.activeViewId];
                 tmpViewBack.activateView();
+                let tmpNavEvent = this.views[this.activeViewId].navEvent;
+                this.setActiveMenuElement(tmpNavEvent);
                 this.activeRoute = this.views[this.activeViewId].route;
             }
         }
@@ -219,6 +235,26 @@ class ViewNavigator extends EventDispatcher {
      * @memberof ViewNavigator
      */
     navigateToView(_viewId) {
+
+    }
+
+
+    /**
+     *
+     * @description This method will be implemented by Subclass
+     * @memberof ViewNavigator
+     */
+    removeActiveMenuElement(){
+
+    }
+
+    /**
+     *
+     * @description This method will be implemented by Subclass
+     * @param {string} _navEvent - Navigation Event Name
+     * @memberof ViewNavigator
+     */
+    setActiveMenuElement(_navEvent){
 
     }
 
@@ -318,9 +354,8 @@ class ViewNavigator extends EventDispatcher {
         }
 
 
-        let tmpParentEl = document.getElementById(this.parentId);;
         let tmpNavigatorEl = ElementUtils.viewNavigator(this.id);
-        tmpParentEl.removeChild(tmpNavigatorEl);
+        tmpNavigatorEl.parentNode.removeChild(tmpNavigatorEl);
 
         this.views = null;
         this.viewstacks = null;

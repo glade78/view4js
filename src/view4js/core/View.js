@@ -46,15 +46,17 @@ class View extends EventDispatcher {
      * View created and manage by ViewNavigator.
      * @param {String} _id - View Id
      * @param {String} _route - View Route
+     * @param {String} _navevent - View Navigation Event Name
      * @param {String} _navparams - Parameters pass to View 
      * @param {String} _parentViewStackId - Parent Viewstack Id 
      * @memberof View
      */
-    constructor(_id, _route, _navparams, _parentViewStackId) {
+    constructor(_id, _route,_navevent, _navparams, _parentViewStackId) {
         super();
         this.id = _id;
         this.route = _route;
-        this.navparams = _navparams;
+        this.navEvent = _navevent;
+        this.navParams = _navparams;
         this.parentViewStackId = _parentViewStackId;
         this.isAttached = false;
         this.isActive = false;

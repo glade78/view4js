@@ -61,6 +61,7 @@ class ViewManager extends EventDispatcher {
         this.currentNavigatorIds = [];
         this.router = new Router();
         this.rootId = "root";
+        this.currentRoute = null;
         EventBroadCaster.navEventChannel.addEventListener(EventUtils.NAV_CHANGE_EVENT, event => { this.handleNavChangeEvent(event); });
     }
 
@@ -123,6 +124,7 @@ class ViewManager extends EventDispatcher {
      */
     addNavigator(_navigator, _navigatorId) {
         this.navigators[_navigatorId] = _navigator;
+        //this.currentNavigatorIds.push(_navigatorId);
     }
 
     /**
@@ -138,7 +140,7 @@ class ViewManager extends EventDispatcher {
     }
 
     /**
-     * @returns {Object} - ViewNavigator by Route 
+     * @returns {Array} - NavigatorID Array 
      * @param {string} _route - Path Route Name
      * @memberof ViewManager 
      */
@@ -167,6 +169,7 @@ class ViewManager extends EventDispatcher {
             this.changeBackNavigation(navigatorIds, route);
         } else {
             this.currentRoute = route;
+            this.chkAndDestroyNestedNavs(route);
             this.changeNavigation(navigatorIds, route, navevent, navparams);
         }
     }
@@ -185,7 +188,9 @@ class ViewManager extends EventDispatcher {
             for (let j = 0; j < _navigatorIds.length; j++) {
                 let tmpNavId = _navigatorIds[j];
                 let tmpNavigator = this.getNavigator(tmpNavId);
-                tmpNavigator.navigateBack(_route);
+                if(tmpNavigator.history == true){
+                    tmpNavigator.navigateBack(_route);
+                }
             }
         }
 
@@ -220,6 +225,57 @@ class ViewManager extends EventDispatcher {
             }
         }
 
+    }
+
+    chkAndDestroyNestedNavs(_route) {
+        // Find Navigators Ids with current active route
+        let tmpCurrNavIds = this.findRouteNavigator(_route);
+        let tmpCurrViewIds = [];
+        let tmpNestNavIds = [];
+
+        // Chk Active route Navigators have history false
+        // If History false then get its ViewId
+        if (tmpCurrNavIds.length > 0) {
+            for (let x = 0; x < tmpCurrNavIds.length; x++) {
+                let tmpCurrNavId = tmpCurrNavIds[x];
+                if(this.navigators[tmpCurrNavId] != null)  {
+                    let tmpViewId = this.navigators[tmpCurrNavId].activeViewId;
+                    if(this.navigators[tmpCurrNavId].history == false){
+                        tmpCurrViewIds.push(tmpViewId);
+                    }
+                } 
+            }
+        }
+
+        // Find Navigators who have Active ViewId as Parent
+        if (tmpCurrViewIds.length > 0) {
+            for (let y = 0; y < tmpCurrViewIds.length; y++) {
+                let tmpViwId = tmpCurrViewIds[y];
+                let tmpNestNavId = this.chkViewAsNavigatorParent(tmpViwId);
+                if(tmpNestNavId != null){
+                    tmpNestNavIds.push(tmpNestNavId);
+                }
+            }
+        }
+
+        // Destory Navigators who have Active ViewId as Parent
+        if(tmpNestNavIds.length > 0){
+            this.destroyUnusedNavigators(tmpNestNavIds);
+        }
+
+    }
+
+    chkViewAsNavigatorParent(_viewId) {
+        let tmpNavId = null;
+        for( let nav in this.navigators){
+            if(this.navigators[nav] != null){
+                let tmpParentId = this.navigators[nav].parentId;
+                if ((tmpParentId != null) && (tmpParentId == _viewId)){
+                    tmpNavId = this.navigators[nav].id;
+                } 
+            } 
+        }
+        return tmpNavId;
     }
 
     /**

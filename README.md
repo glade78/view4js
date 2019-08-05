@@ -47,9 +47,11 @@ Highly customizable.
 Can be use with Vue.js and React.js in components. Although it does not require as making component is not big effort in ES6. 
 
 ## API Documentation
-[View4Js API] (https://glade78.github.io/view4js/index.html)
+View4Js API
+[https://glade78.github.io/view4js/index.html](https://glade78.github.io/view4js/index.html)
 
 ## How to Use it
   Please have a look in 
+  [Examples Live Demo](https://glade78.github.io/view4js/example/)
+  
   [View4js Sample Application](https://github.com/glade78/view4js-sampleapp)
-	

@@ -2281,6 +2281,88 @@
       return Step;
   }(view4js.Component);
 
+  var MessageBox = function (_Component) {
+      inherits(MessageBox, _Component);
+
+      function MessageBox() {
+          var _id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+          var _parentViewId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+          var _parentContainerId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+          var _createDOMElement = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+          classCallCheck(this, MessageBox);
+          return possibleConstructorReturn(this, _Component.call(this, _id, _parentViewId, _parentContainerId, _createDOMElement));
+      }
+
+      MessageBox.prototype.init = function init() {
+          var _icon = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+          var _title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Title";
+
+          var _msg = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Sample Message";
+
+          var _type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "Info";
+
+          var _isCloseable = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+
+          _Component.prototype.init.call(this);
+          this.message = {};
+          this.message.icon = _icon;
+          this.message.title = _title;
+          this.message.msg = _msg;
+          this.message.type = _type;
+          this.message.isCloseable = _isCloseable;
+      };
+
+      MessageBox.prototype.initComponent = function initComponent() {
+          _Component.prototype.initComponent.call(this);
+      };
+
+      MessageBox.prototype.addEventHandler = function addEventHandler() {
+          var _this2 = this;
+
+          _Component.prototype.addEventHandler.call(this);
+          if (this.componentElement != null && this.message.isCloseable == true) {
+              var closeEl = this.componentElement.querySelector(".icon.close");
+              closeEl.addEventListener(ComponentEventUtil.CLICK, function (e) {
+                  _this2.clickHandler(e);
+              });
+          }
+      };
+
+      MessageBox.prototype.clickHandler = function clickHandler(event) {
+          event.preventDefault();
+          this.close();
+          this.dispatchEvent(ComponentEventUtil.CLOSE, this);
+      };
+
+      MessageBox.prototype.close = function close() {
+          var compoEl = this.componentElement;
+          this.destroy();
+          compoEl.parentNode.removeChild(compoEl);
+          this.dispatchEvent(ComponentEventUtil.CLOSE, this);
+      };
+
+      MessageBox.prototype.createDOMContent = function createDOMContent() {
+          _Component.prototype.createDOMContent.call(this);
+          var tmpCompContentEl = this.createComponentHTML();
+          this.addToComponentElement(tmpCompContentEl);
+      };
+
+      MessageBox.prototype.createComponentHTML = function createComponentHTML() {
+          return SemanticUITmpl.MESSAGEBOX(this.message.icon, this.message.title, this.message.msg, this.message.type, this.message.isCloseable);
+      };
+
+      MessageBox.prototype.destroy = function destroy() {
+          this.message = null;
+      };
+
+      return MessageBox;
+  }(view4js.Component);
+
   var SemanticUIFormView = function (_View) {
       inherits(SemanticUIFormView, _View);
 
@@ -2444,10 +2526,29 @@
           SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepPanelEl);
           wizardStep.changeStepStatus(1, "completed");
           wizardStep.changeStepStatus(2, "active");
+
+          // Stepper Preview
+          var msgBoxPanelEl = view4js.ElementUtils.container("msgBoxPanel");
+          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+          var simpleMsgBox = new MessageBox("usrMsgBox", this.id, "msgBoxPanel", true);
+          simpleMsgBox.init("inbox", "Inbox", "You have new message", "info", true);
+          simpleMsgBox.attach();
+          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+          var loadingMsgBox = new MessageBox("usrLoadingMsgBox", this.id, "msgBoxPanel", true);
+          loadingMsgBox.init("notched circle loading", "Register User", "Please wait verifying Email", "", false);
+          loadingMsgBox.attach();
+          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+          var errorMsgBox = new MessageBox("usrErrorMsgBox", this.id, "msgBoxPanel", true);
+          errorMsgBox.init("exclamation circle", "Failed Register User", "Invalid Email", "negative", true);
+          errorMsgBox.attach();
+          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
       };
 
       SemanticUIFormView.prototype.createViewHTML = function createViewHTML() {
-          return '\n        <div class="ui segment content">\n        <div class="ui hidden divider"></div>\n            <div class="vjs-container buttonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                        Buttons\n                </h2>\n                <div class="vjs-component usrButton" style="display: block;">\n                    <button class="ui primary button">Primary Button\n                    </button>\n                </div>\n            </div> <!-- End Of  Button Panel -->\n            <div class="vjs-container checkBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                    CheckBox\n                </h2>\n            </div> <!-- End Of  CheckBox Panel -->\n            <div class="vjs-container conditionButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ConditionButton\n                </h2>\n            </div> <!-- End Of  ConditionButton Panel -->\n            <div class="vjs-container radioButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Radio Button\n                </h2>\n\n                <div class="grouped fields">\n                    <label>How often do you use checkboxes?</label>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2" checked="checked">\n                        <label>Once a week</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>2-3 times a week</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>Once a day</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>Twice a day</label>\n                    </div>\n                    </div>\n                </div>\n\n            </div> <!-- End Of  Radio Button Panel -->\n            <div class="vjs-container dropdownPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Dropdown\n                </h2>\n            </div> <!-- End Of  Dropdown Panel -->\n            <div class="vjs-container progressbarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Progressbar\n                </h2>\n            </div> <!-- End Of  Progressbar Panel -->\n            <div class="vjs-container stepperPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Stepper\n                </h2>\n            </div> <!-- End Of  Stepper Panel -->\n            <div class="vjs-container stepPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Steps\n                </h2>\n            </div> <!-- End Of  Steps Panel -->\n            <div class="vjs-container toolBarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ToolBar\n                </h2>\n            </div> <!-- End Of  ToolBar Panel -->\n            \n            <div class="vjs-container ratingPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Rating\n                </h2>\n            </div> <!-- End Of  Rating Panel -->\n            <div class="vjs-container dateTimePanel" data-layout="form">\n                <h2 class="ui dividing header">\n                DateTime\n                </h2>\n            </div> <!-- End Of  DateTime Panel -->\n\n        </div>\n        ';
+          return '\n        <div class="ui segment content">\n        <div class="ui hidden divider"></div>\n            <div class="vjs-container buttonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                        Buttons\n                </h2>\n                <div class="vjs-component usrButton" style="display: block;">\n                    <button class="ui primary button">Primary Button\n                    </button>\n                </div>\n            </div> <!-- End Of  Button Panel -->\n            <div class="vjs-container checkBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                    CheckBox\n                </h2>\n            </div> <!-- End Of  CheckBox Panel -->\n            <div class="vjs-container conditionButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ConditionButton\n                </h2>\n            </div> <!-- End Of  ConditionButton Panel -->\n            <div class="vjs-container radioButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Radio Button\n                </h2>\n\n                <div class="grouped fields">\n                    <label>How often do you use checkboxes?</label>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2" checked="checked">\n                        <label>Once a week</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>2-3 times a week</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>Once a day</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>Twice a day</label>\n                    </div>\n                    </div>\n                </div>\n\n            </div> <!-- End Of  Radio Button Panel -->\n            <div class="vjs-container dropdownPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Dropdown\n                </h2>\n            </div> <!-- End Of  Dropdown Panel -->\n            <div class="vjs-container progressbarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Progressbar\n                </h2>\n            </div> <!-- End Of  Progressbar Panel -->\n            <div class="vjs-container stepperPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Stepper\n                </h2>\n            </div> <!-- End Of  Stepper Panel -->\n            <div class="vjs-container stepPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Steps\n                </h2>\n            </div> <!-- End Of  Steps Panel -->\n            <div class="vjs-container msgBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Message Box\n                </h2>\n            </div> <!-- End Of  MessageBoxPanel Panel -->\n            <div class="vjs-container toolBarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ToolBar\n                </h2>\n            </div> <!-- End Of  ToolBar Panel -->\n            \n            <div class="vjs-container ratingPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Rating\n                </h2>\n            </div> <!-- End Of  Rating Panel -->\n            <div class="vjs-container dateTimePanel" data-layout="form">\n                <h2 class="ui dividing header">\n                DateTime\n                </h2>\n            </div> <!-- End Of  DateTime Panel -->\n\n        </div>\n        ';
       };
 
       SemanticUIFormView.prototype.removeViewHandler = function removeViewHandler() {

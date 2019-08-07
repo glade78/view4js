@@ -831,9 +831,9 @@
 
           var _titleTxt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Please select any item";
 
-          var radioGrpEl = '\n        <div class="ui form">\n        <div class="grouped fields">\n            <label>' + _titleTxt + '</label>\n            ' + _dp.map(function (menuitem, i) {
-              return '<div class="field">\n                <div class="ui radio checkbox" data-value="' + menuitem.value + '" data-index="' + i + '">\n                    <input type="radio" name="' + _grpName + '" tabindex="0" class="hidden">\n                    <label>' + menuitem.label + '</label>\n                </div>\n            </div></br>';
-          }).join(' ') + '\n        </div>\n        </div>\n        ';
+          var radioGrpEl = '\n        <div class="grouped fields">\n            <label>' + _titleTxt + '</label>\n            ' + _dp.map(function (menuitem, i) {
+              return '<div class="field">\n                <div class="ui radio checkbox" data-value="' + menuitem.value + '" data-index="' + i + '">\n                    <input type="radio" name="' + _grpName + '" tabindex="0" class="hidden">\n                    <label>' + menuitem.label + '</label>\n                </div>\n            </div>';
+          }).join(' ') + '\n        </div>\n        ';
           return radioGrpEl;
       };
 
@@ -2762,11 +2762,16 @@
                   var rdGrpPanelEl = view4js.ElementUtils.container("radioButtonPanel");
                   SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
 
-                  var rdGrp = new RadioButtonGroup("usrRadioGrp", this.id, "radioButtonPanel", true);
-                  var radioGrpDp = [{ label: "Once a week", value: 1 }, { label: "2-3 times a week", value: 2 }, { label: "Once a day", value: 3 }, { label: "Twice a day", value: 4 }];
-                  rdGrp.init(radioGrpDp, "example2", "How Often you eat Apple");
+                  /*let rdGrp = new RadioButtonGroup("usrRadioGrp",this.id,"radioButtonPanel",true);
+                  let radioGrpDp = [
+                      {label:"Once a week",value:1},
+                      {label:"2-3 times a week",value:2},
+                      {label:"Once a day",value:3},
+                      {label:"Twice a day",value:4}
+                  ];
+                  rdGrp.init(radioGrpDp,"example2","How Often you eat Apple");
                   rdGrp.attach();
-                  //rdGrp.changeSelectedItem(2);
+                  //rdGrp.changeSelectedItem(2);*/
 
                   SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
           };

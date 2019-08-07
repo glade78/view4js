@@ -824,6 +824,19 @@
           return steper;
       };
 
+      SemanticUITmpl.RADIO_BUTTON_GROUP = function RADIO_BUTTON_GROUP() {
+          var _dp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+          var _grpName = arguments[1];
+
+          var _titleTxt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Please select any item";
+
+          var radioGrpEl = '\n        <div class="grouped fields">\n            <label>' + _titleTxt + '</label>\n            ' + _dp.map(function (menuitem, i) {
+              return '<div class="field">\n                <div class="ui radio checkbox" data-value="' + menuitem.value + '" data-index="' + i + '">\n                    <input type="radio" name="' + _grpName + '" tabindex="0" class="hidden">\n                    <label>' + menuitem.label + '</label>\n                </div>\n            </div>';
+          }).join(' ') + '\n        </div>\n        ';
+          return radioGrpEl;
+      };
+
       SemanticUITmpl.DROPDOWN = function DROPDOWN() {
           var _dp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
@@ -2363,199 +2376,417 @@
       return MessageBox;
   }(view4js.Component);
 
-  var SemanticUIFormView = function (_View) {
-      inherits(SemanticUIFormView, _View);
+  //Check Semantic UI Popup Component
 
-      function SemanticUIFormView(_id, _route, _navevent, _navparams, _parentViewStackId) {
-          classCallCheck(this, SemanticUIFormView);
-          return possibleConstructorReturn(this, _View.call(this, _id, _route, _navevent, _navparams, _parentViewStackId));
+  var ToolButton = function (_Component) {
+      inherits(ToolButton, _Component);
+
+      function ToolButton() {
+          var _id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+          var _parentViewId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+          var _parentContainerId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+          var _createDOMElement = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+          classCallCheck(this, ToolButton);
+          return possibleConstructorReturn(this, _Component.call(this, _id, _parentViewId, _parentContainerId, _createDOMElement));
       }
 
-      SemanticUIFormView.prototype.initView = function initView() {
-          _View.prototype.initView.call(this);
-          this.back_lnk_id = "back";
-          this.submit_lnk_id = "submit";
+      ToolButton.prototype.initComponent = function initComponent() {
+          _Component.prototype.initComponent.call(this);
       };
 
-      //Overrides by SubClass
-      // call by attachView
+      ToolButton.prototype.init = function init() {
+          var _icon = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
+          var _label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
 
-      SemanticUIFormView.prototype.bindView = function bindView() {
-          _View.prototype.bindView.call(this);
+          var _properties = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+          var _tooltiplbl = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "tooltip";
+
+          var _pos = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "bottom center";
+
+          var _isInverted = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
+
+          var _formId = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "defaultform";
+
+          this.icon = _icon;
+          this.label = _label;
+          this.tooltips = {};
+          this.tooltips.label = _tooltiplbl;
+          this.tooltips.position = _pos;
+          this.tooltips.isInverted = _isInverted;
+          this.properties = _properties;
+          this.formId = _formId;
+          _Component.prototype.init.call(this);
       };
 
-      /*
-      Add HTML Element Event Handlers 
-      call by attachView
-      */
-
-
-      SemanticUIFormView.prototype.addViewHandler = function addViewHandler() {
-          _View.prototype.addViewHandler.call(this);
+      ToolButton.prototype.createDOMContent = function createDOMContent() {
+          _Component.prototype.createDOMContent.call(this);
+          var tmpCompContentEl = this.createComponentHTML();
+          this.addToComponentElement(tmpCompContentEl);
       };
 
-      SemanticUIFormView.prototype.handleSubmit = function handleSubmit(event) {
-          console.log("View1 Submit Clicked");
+      ToolButton.prototype.createComponentHTML = function createComponentHTML() {
+          var csspropstr = SemanticUITmpl.CSSPROPARRAYSTR(this.properties);
+          return SemanticUITmpl.TOOLBUTTON(this.label, this.icon, csspropstr, this.tooltips.label, this.tooltips.position, this.tooltips.isInverted);
+      };
+
+      return ToolButton;
+  }(view4js.Component);
+
+  /**
+   * DataProvider :
+   * Array of Objects 
+   * let dropdownDp = [
+   *      {label:"Item1",value:1},
+   *      {label:"Item2",value:2}
+   * ]
+   */
+
+  var RadioButtonGroup = function (_Component) {
+      inherits(RadioButtonGroup, _Component);
+
+      function RadioButtonGroup() {
+          var _id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+          var _parentViewId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+          var _parentContainerId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+          var _createDOMElement = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+          classCallCheck(this, RadioButtonGroup);
+          return possibleConstructorReturn(this, _Component.call(this, _id, _parentViewId, _parentContainerId, _createDOMElement));
+      }
+
+      RadioButtonGroup.prototype.init = function init() {
+          var _dataProvider = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+          var _grpName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "RadioBtnGrp";
+
+          var _titleText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Select any item";
+
+          var _formId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "defaultform";
+
+          this.dataProvider = _dataProvider;
+          this.formId = _formId;
+          this.grpName = _grpName;
+          this.selectedItem = null;
+          this.selectedIndex = 0;
+          this.titleText = _titleText;
+          _Component.prototype.init.call(this);
+      };
+
+      RadioButtonGroup.prototype.initComponent = function initComponent() {
+          _Component.prototype.initComponent.call(this);
+      };
+
+      RadioButtonGroup.prototype.createDOMContent = function createDOMContent() {
+          _Component.prototype.createDOMContent.call(this);
+          var tmpCompContentEl = this.createComponentHTML();
+          this.addToComponentElement(tmpCompContentEl);
+          this.changeSelectedItem(this.selectedIndex);
+      };
+
+      RadioButtonGroup.prototype.addEventHandler = function addEventHandler() {
+          var _this2 = this;
+
+          _Component.prototype.addEventHandler.call(this);
+          if (this.componentElement != null) {
+              var rdItemList = this.componentElement.querySelectorAll(".ui.radio");
+              for (var i = 0; i < rdItemList.length; i++) {
+                  rdItemList[i].addEventListener("click", function (e) {
+                      _this2.handleRadioClick(e);
+                  });
+              }
+          }
+      };
+
+      RadioButtonGroup.prototype.handleRadioClick = function handleRadioClick(event) {
           event.preventDefault();
-          var navEvent = new view4js.NavigationEvent(view4js.EventUtils.NAV_CHANGE_EVENT, "View2_Nav_Event", "testusers", this.route);
-          view4js.EventBroadCaster.navEventChannel.dispatchEvent(navEvent);
+          var el = event.currentTarget;
+
+          if (this.dataProvider[el.dataset.index].value == el.dataset.value) {
+              this.changeSelectedItem(el.dataset.index);
+          }
       };
 
-      // call by attachView
+      RadioButtonGroup.prototype.changeSelectedItem = function changeSelectedItem() {
+          var _index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 
+          if (_index != -1) {
+              //Change SelectedItem & Index Property
+              this.selectedIndex = _index;
+              this.selectedItem = this.dataProvider[_index];
 
-      SemanticUIFormView.prototype.createViewContent = function createViewContent() {
-          var tmpViewContentEl = this.createViewHTML();
-          this.addToViewElement(tmpViewContentEl);
+              //Remove Old Selected RadioButton
+              var oldRdEl = this.componentElement.querySelector(".checked");
+              if (oldRdEl != null) {
+                  oldRdEl.classList.remove("checked");
+                  var tmpOldRdInput = oldRdEl.querySelector("input");
+                  tmpOldRdInput.setAttribute("checked", "");
+              }
 
-          var checkBoxPanelEl = view4js.ElementUtils.container("checkBoxPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
+              //Add Selected Item in ItemList of Dropdown Menu
+              var newRdEl = this.componentElement.querySelector('[data-index="' + _index + '"]');
+              newRdEl.classList.add('checked');
+              var tmpNewRdInput = newRdEl.querySelector("input");
+              tmpNewRdInput.setAttribute("checked", "checked");
 
-          // CheckBox, Slider Preview
-          var chkBoxSlider = new Checkbox("usrSlider", this.id, "checkBoxPanel", true);
-          chkBoxSlider.init(true, "Slider", "slider");
-          chkBoxSlider.attach();
-          chkBoxSlider.readOnly = false;
-
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
-
-          var chkBox = new Checkbox("usrCheckBox", this.id, "checkBoxPanel", true);
-          chkBox.init(true, "CheckBox", "");
-          chkBox.attach();
-          chkBox.readOnly = false;
-
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
-
-          var chkBoxToggle = new Checkbox("usrToggle", this.id, "checkBoxPanel", true);
-          chkBoxToggle.init(true, "Toggle", "toggle");
-          chkBoxToggle.attach();
-          chkBoxToggle.readOnly = false;
-
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
-
-          // Button, Icon , LabelButton Preview
-
-          var buttonPanelEl = view4js.ElementUtils.container("buttonPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
-
-          var simpleButton = new Button("usrButton", this.id, "buttonPanel", false);
-          simpleButton.init();
-          simpleButton.attach();
-          simpleButton.enabled = false;
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
-
-          var iconLabelButton = new Button("usrIconLabelButton", this.id, "buttonPanel", true);
-          iconLabelButton.init("home", "Home", "red");
-          iconLabelButton.attach();
-          iconLabelButton.enabled = true;
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
-
-          var iconCirButton = new Button("usrIconCircularButton", this.id, "buttonPanel", true);
-          iconCirButton.init("settings", "", "violet circular icon");
-          iconCirButton.attach();
-          iconCirButton.enabled = true;
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
-
-          var socialCirButton = new Button("usrSocialCirButton", this.id, "buttonPanel", true);
-          socialCirButton.init("facebook", "", "circular facebook icon");
-          socialCirButton.attach();
-          socialCirButton.enabled = true;
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
-
-          // Condition Button Preview
-
-          var conBtnPanelEl = view4js.ElementUtils.container("conditionButtonPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(conBtnPanelEl);
-
-          var conditionButton = new ConditionButtons("usrConditionBtn", this.id, "conditionButtonPanel", true);
-          var yesCondBtn = {};
-          yesCondBtn.icon = "";
-          yesCondBtn.label = "Yes";
-          yesCondBtn.properties = "green";
-
-          var noCondBtn = {};
-          noCondBtn.icon = "";
-          noCondBtn.label = "No";
-          noCondBtn.properties = "red";
-
-          conditionButton.init(yesCondBtn, noCondBtn);
-          conditionButton.attach();
-          conditionButton.enabled = true;
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(conBtnPanelEl);
-
-          // ProgressBar Preview
-          var progrsBarPanelEl = view4js.ElementUtils.container("progressbarPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(progrsBarPanelEl);
-
-          var progrsBar = new ProgressBar("usrProgrsBar", this.id, "progressbarPanel", true);
-          progrsBar.init("small", "Installing");
-          progrsBar.attach();
-          progrsBar.setProgress(40, "Installing Please wait", 'active');
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(progrsBarPanelEl);
-
-          // Stepper Preview
-          var stepperPanelEl = view4js.ElementUtils.container("stepperPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepperPanelEl);
-
-          var numStepper = new Stepper("usrStepper", this.id, "stepperPanel", true);
-          numStepper.init(0, 5, 2, 2);
-          numStepper.attach();
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepperPanelEl);
-
-          // Dopdown Preview
-          var dropdwnPanelEl = view4js.ElementUtils.container("dropdownPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(dropdwnPanelEl);
-
-          var dropdwn = new Dropdown("usrDropdwn", this.id, "dropdownPanel", true);
-          var dropdownDp = [{ label: "Item1", value: 1 }, { label: "Item2", value: 2 }];
-          dropdwn.init(dropdownDp, "City", "CityDropDown", "Select City");
-          dropdwn.attach();
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(dropdwnPanelEl);
-
-          // Stepper Preview
-          var stepPanelEl = view4js.ElementUtils.container("stepPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepPanelEl);
-
-          var wizardStep = new Step("usrStep", this.id, "stepPanel", true);
-          wizardStep.init();
-          wizardStep.attach();
-          wizardStep.addStep("th", "Step1-Dashboard", "Shows Dashboard Panel");
-          wizardStep.addStep("settings", "Step2-Setting", "Shows Settings Panel");
-          wizardStep.addStep("sticky note outline", "Step3-Report", "Shows Report Panel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepPanelEl);
-          wizardStep.changeStepStatus(1, "completed");
-          wizardStep.changeStepStatus(2, "active");
-
-          // Stepper Preview
-          var msgBoxPanelEl = view4js.ElementUtils.container("msgBoxPanel");
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
-
-          var simpleMsgBox = new MessageBox("usrMsgBox", this.id, "msgBoxPanel", true);
-          simpleMsgBox.init("inbox", "Inbox", "You have new message", "info", true);
-          simpleMsgBox.attach();
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
-
-          var loadingMsgBox = new MessageBox("usrLoadingMsgBox", this.id, "msgBoxPanel", true);
-          loadingMsgBox.init("notched circle loading", "Register User", "Please wait verifying Email", "", false);
-          loadingMsgBox.attach();
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
-
-          var errorMsgBox = new MessageBox("usrErrorMsgBox", this.id, "msgBoxPanel", true);
-          errorMsgBox.init("exclamation circle", "Failed Register User", "Invalid Email", "negative", true);
-          errorMsgBox.attach();
-          SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+              // Dispatch Change Event 
+              this.dispatchEvent(view4js.EventUtils.CHANGE, this);
+          }
       };
 
-      SemanticUIFormView.prototype.createViewHTML = function createViewHTML() {
-          return '\n        <div class="ui segment content">\n        <div class="ui hidden divider"></div>\n            <div class="vjs-container buttonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                        Buttons\n                </h2>\n                <div class="vjs-component usrButton" style="display: block;">\n                    <button class="ui primary button">Primary Button\n                    </button>\n                </div>\n            </div> <!-- End Of  Button Panel -->\n            <div class="vjs-container checkBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                    CheckBox\n                </h2>\n            </div> <!-- End Of  CheckBox Panel -->\n            <div class="vjs-container conditionButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ConditionButton\n                </h2>\n            </div> <!-- End Of  ConditionButton Panel -->\n            <div class="vjs-container radioButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Radio Button\n                </h2>\n\n                <div class="grouped fields">\n                    <label>How often do you use checkboxes?</label>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2" checked="checked">\n                        <label>Once a week</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>2-3 times a week</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>Once a day</label>\n                    </div>\n                    </div>\n                    <div class="field">\n                    <div class="ui radio checkbox">\n                        <input type="radio" name="example2">\n                        <label>Twice a day</label>\n                    </div>\n                    </div>\n                </div>\n\n            </div> <!-- End Of  Radio Button Panel -->\n            <div class="vjs-container dropdownPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Dropdown\n                </h2>\n            </div> <!-- End Of  Dropdown Panel -->\n            <div class="vjs-container progressbarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Progressbar\n                </h2>\n            </div> <!-- End Of  Progressbar Panel -->\n            <div class="vjs-container stepperPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Stepper\n                </h2>\n            </div> <!-- End Of  Stepper Panel -->\n            <div class="vjs-container stepPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Steps\n                </h2>\n            </div> <!-- End Of  Steps Panel -->\n            <div class="vjs-container msgBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Message Box\n                </h2>\n            </div> <!-- End Of  MessageBoxPanel Panel -->\n            <div class="vjs-container toolBarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ToolBar\n                </h2>\n            </div> <!-- End Of  ToolBar Panel -->\n            \n            <div class="vjs-container ratingPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Rating\n                </h2>\n            </div> <!-- End Of  Rating Panel -->\n            <div class="vjs-container dateTimePanel" data-layout="form">\n                <h2 class="ui dividing header">\n                DateTime\n                </h2>\n            </div> <!-- End Of  DateTime Panel -->\n\n        </div>\n        ';
+      RadioButtonGroup.prototype.setComponentEnabled = function setComponentEnabled() {
+          _Component.prototype.setComponentEnabled.call(this);
+          //TODO   
       };
 
-      SemanticUIFormView.prototype.removeViewHandler = function removeViewHandler() {
-          _View.prototype.removeViewHandler.call(this);
+      RadioButtonGroup.prototype.setComponentReadOnly = function setComponentReadOnly() {
+          _Component.prototype.setComponentReadOnly.call(this);
       };
 
-      return SemanticUIFormView;
+      RadioButtonGroup.prototype.createComponentHTML = function createComponentHTML() {
+          return SemanticUITmpl.RADIO_BUTTON_GROUP(this.dataProvider, this.grpName, this.titleText);
+      };
+
+      return RadioButtonGroup;
+  }(view4js.Component);
+
+  var SemanticUIFormView = function (_View) {
+          inherits(SemanticUIFormView, _View);
+
+          function SemanticUIFormView(_id, _route, _navevent, _navparams, _parentViewStackId) {
+                  classCallCheck(this, SemanticUIFormView);
+                  return possibleConstructorReturn(this, _View.call(this, _id, _route, _navevent, _navparams, _parentViewStackId));
+          }
+
+          SemanticUIFormView.prototype.initView = function initView() {
+                  _View.prototype.initView.call(this);
+                  this.back_lnk_id = "back";
+                  this.submit_lnk_id = "submit";
+          };
+
+          //Overrides by SubClass
+          // call by attachView
+
+
+          SemanticUIFormView.prototype.bindView = function bindView() {
+                  _View.prototype.bindView.call(this);
+          };
+
+          /*
+          Add HTML Element Event Handlers 
+          call by attachView
+          */
+
+
+          SemanticUIFormView.prototype.addViewHandler = function addViewHandler() {
+                  _View.prototype.addViewHandler.call(this);
+          };
+
+          SemanticUIFormView.prototype.handleSubmit = function handleSubmit(event) {
+                  console.log("View1 Submit Clicked");
+                  event.preventDefault();
+                  var navEvent = new view4js.NavigationEvent(view4js.EventUtils.NAV_CHANGE_EVENT, "View2_Nav_Event", "testusers", this.route);
+                  view4js.EventBroadCaster.navEventChannel.dispatchEvent(navEvent);
+          };
+
+          // call by attachView
+
+
+          SemanticUIFormView.prototype.createViewContent = function createViewContent() {
+                  var _this2 = this;
+
+                  var tmpViewContentEl = this.createViewHTML();
+                  this.addToViewElement(tmpViewContentEl);
+
+                  var checkBoxPanelEl = view4js.ElementUtils.container("checkBoxPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
+
+                  // CheckBox, Slider Preview
+                  var chkBoxSlider = new Checkbox("usrSlider", this.id, "checkBoxPanel", true);
+                  chkBoxSlider.init(true, "Slider", "slider");
+                  chkBoxSlider.attach();
+                  chkBoxSlider.readOnly = false;
+
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
+
+                  var chkBox = new Checkbox("usrCheckBox", this.id, "checkBoxPanel", true);
+                  chkBox.init(true, "CheckBox", "");
+                  chkBox.attach();
+                  chkBox.readOnly = false;
+
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
+
+                  var chkBoxToggle = new Checkbox("usrToggle", this.id, "checkBoxPanel", true);
+                  chkBoxToggle.init(true, "Toggle", "toggle");
+                  chkBoxToggle.attach();
+                  chkBoxToggle.readOnly = false;
+
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(checkBoxPanelEl);
+
+                  // Button, Icon , LabelButton Preview
+
+                  var buttonPanelEl = view4js.ElementUtils.container("buttonPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
+
+                  var simpleButton = new Button("usrButton", this.id, "buttonPanel", false);
+                  simpleButton.init();
+                  simpleButton.attach();
+                  simpleButton.enabled = false;
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
+
+                  var iconLabelButton = new Button("usrIconLabelButton", this.id, "buttonPanel", true);
+                  iconLabelButton.init("home", "Home", "red");
+                  iconLabelButton.attach();
+                  iconLabelButton.enabled = true;
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
+
+                  var iconCirButton = new Button("usrIconCircularButton", this.id, "buttonPanel", true);
+                  iconCirButton.init("settings", "", "violet circular icon");
+                  iconCirButton.attach();
+                  iconCirButton.enabled = true;
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
+
+                  var socialCirButton = new Button("usrSocialCirButton", this.id, "buttonPanel", true);
+                  socialCirButton.init("facebook", "", "circular facebook icon");
+                  socialCirButton.attach();
+                  socialCirButton.enabled = true;
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(buttonPanelEl);
+
+                  // Condition Button Preview
+
+                  var conBtnPanelEl = view4js.ElementUtils.container("conditionButtonPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(conBtnPanelEl);
+
+                  var conditionButton = new ConditionButtons("usrConditionBtn", this.id, "conditionButtonPanel", true);
+                  var yesCondBtn = {};
+                  yesCondBtn.icon = "";
+                  yesCondBtn.label = "Yes";
+                  yesCondBtn.properties = "green";
+
+                  var noCondBtn = {};
+                  noCondBtn.icon = "";
+                  noCondBtn.label = "No";
+                  noCondBtn.properties = "red";
+
+                  conditionButton.init(yesCondBtn, noCondBtn);
+                  conditionButton.attach();
+                  conditionButton.enabled = true;
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(conBtnPanelEl);
+
+                  // ProgressBar Preview
+                  var progrsBarPanelEl = view4js.ElementUtils.container("progressbarPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(progrsBarPanelEl);
+
+                  var progrsBar = new ProgressBar("usrProgrsBar", this.id, "progressbarPanel", true);
+                  progrsBar.init("small", "Installing");
+                  progrsBar.attach();
+                  progrsBar.setProgress(40, "Installing Please wait", 'active');
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(progrsBarPanelEl);
+
+                  // Stepper Preview
+                  var stepperPanelEl = view4js.ElementUtils.container("stepperPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepperPanelEl);
+
+                  var numStepper = new Stepper("usrStepper", this.id, "stepperPanel", true);
+                  numStepper.init(0, 5, 2, 2);
+                  numStepper.attach();
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepperPanelEl);
+
+                  // Dopdown Preview
+                  var dropdwnPanelEl = view4js.ElementUtils.container("dropdownPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(dropdwnPanelEl);
+
+                  var dropdwn = new Dropdown("usrDropdwn", this.id, "dropdownPanel", true);
+                  var dropdownDp = [{ label: "Item1", value: 1 }, { label: "Item2", value: 2 }];
+                  dropdwn.init(dropdownDp, "City", "CityDropDown", "Select City");
+                  dropdwn.attach();
+                  dropdwn.addEventListener(view4js.EventUtils.CHANGE, function (e) {
+                          _this2.handleDropdwnClick(e);
+                  });
+
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(dropdwnPanelEl);
+
+                  // Stepper Preview
+                  var stepPanelEl = view4js.ElementUtils.container("stepPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepPanelEl);
+
+                  var wizardStep = new Step("usrStep", this.id, "stepPanel", true);
+                  wizardStep.init();
+                  wizardStep.attach();
+                  wizardStep.addStep("th", "Step1-Dashboard", "Shows Dashboard Panel");
+                  wizardStep.addStep("settings", "Step2-Setting", "Shows Settings Panel");
+                  wizardStep.addStep("sticky note outline", "Step3-Report", "Shows Report Panel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(stepPanelEl);
+                  wizardStep.changeStepStatus(1, "completed");
+                  wizardStep.changeStepStatus(2, "active");
+
+                  // MessageBox Preview
+                  var msgBoxPanelEl = view4js.ElementUtils.container("msgBoxPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+                  var simpleMsgBox = new MessageBox("usrMsgBox", this.id, "msgBoxPanel", true);
+                  simpleMsgBox.init("inbox", "Inbox", "You have new message", "info", true);
+                  simpleMsgBox.attach();
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+                  var loadingMsgBox = new MessageBox("usrLoadingMsgBox", this.id, "msgBoxPanel", true);
+                  loadingMsgBox.init("notched circle loading", "Register User", "Please wait verifying Email", "", false);
+                  loadingMsgBox.attach();
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+                  var errorMsgBox = new MessageBox("usrErrorMsgBox", this.id, "msgBoxPanel", true);
+                  errorMsgBox.init("exclamation circle", "Failed Register User", "Invalid Email", "negative", true);
+                  errorMsgBox.attach();
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(msgBoxPanelEl);
+
+                  // ToolButton Preview
+                  var toolbarPanelEl = view4js.ElementUtils.container("toolBarPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(toolbarPanelEl);
+
+                  var toolBtn = new ToolButton("usrToolButton", this.id, "toolBarPanel", true);
+                  toolBtn.init("user", "Account", "primary", "User Account Details", "bottom center", true);
+                  toolBtn.attach();
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(toolbarPanelEl);
+
+                  // RadioButton Group Preview
+                  var rdGrpPanelEl = view4js.ElementUtils.container("radioButtonPanel");
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
+
+                  var rdGrp = new RadioButtonGroup("usrRadioGrp", this.id, "radioButtonPanel", true);
+                  var radioGrpDp = [{ label: "Once a week", value: 1 }, { label: "2-3 times a week", value: 2 }, { label: "Once a day", value: 3 }, { label: "Twice a day", value: 4 }];
+                  rdGrp.init(radioGrpDp, "foodIntactRdGrp", "How Often you eat Apple");
+                  rdGrp.attach();
+                  rdGrp.changeSelectedItem(2);
+                  rdGrp.addEventListener(view4js.EventUtils.CHANGE, function (e) {
+                          _this2.handleDropdwnClick(e);
+                  });
+
+                  SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
+          };
+
+          SemanticUIFormView.prototype.handleDropdwnClick = function handleDropdwnClick(event) {
+                  event.preventDefault();
+                  var tmpDropdown = event.target;
+                  console.log(" Dropdown Selected Index" + tmpDropdown.selectedIndex);
+          };
+
+          SemanticUIFormView.prototype.createViewHTML = function createViewHTML() {
+                  return '\n        <div class="ui segment content">\n        <div class="ui hidden divider"></div>\n            <div class="vjs-container buttonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                        Buttons\n                </h2>\n                <div class="vjs-component usrButton" style="display: block;">\n                    <button class="ui primary button">Primary Button\n                    </button>\n                </div>\n            </div> <!-- End Of  Button Panel -->\n            <div class="vjs-container checkBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                    CheckBox\n                </h2>\n            </div> <!-- End Of  CheckBox Panel -->\n            <div class="vjs-container conditionButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ConditionButton\n                </h2>\n            </div> <!-- End Of  ConditionButton Panel -->\n            <div class="vjs-container radioButtonPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Radio Button Group\n                </h2>\n\n\n            </div> <!-- End Of  Radio Button Panel -->\n            <div class="vjs-container dropdownPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Dropdown\n                </h2>\n            </div> <!-- End Of  Dropdown Panel -->\n            <div class="vjs-container progressbarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Progressbar\n                </h2>\n            </div> <!-- End Of  Progressbar Panel -->\n            <div class="vjs-container stepperPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Stepper\n                </h2>\n            </div> <!-- End Of  Stepper Panel -->\n            <div class="vjs-container stepPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Steps\n                </h2>\n            </div> <!-- End Of  Steps Panel -->\n            <div class="vjs-container msgBoxPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Message Box\n                </h2>\n            </div> <!-- End Of  MessageBoxPanel Panel -->\n            <div class="vjs-container toolBarPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                ToolBar\n                </h2>\n            </div> <!-- End Of  ToolBar Panel -->\n            \n            <div class="vjs-container ratingPanel" data-layout="form">\n                <h2 class="ui dividing header">\n                Rating\n                </h2>\n            </div> <!-- End Of  Rating Panel -->\n            <div class="vjs-container dateTimePanel" data-layout="form">\n                <h2 class="ui dividing header">\n                DateTime\n                </h2>\n            </div> <!-- End Of  DateTime Panel -->\n\n        </div>\n        ';
+          };
+
+          SemanticUIFormView.prototype.removeViewHandler = function removeViewHandler() {
+                  _View.prototype.removeViewHandler.call(this);
+          };
+
+          return SemanticUIFormView;
   }(view4js.View);
 
   var SideBarHeadContNavigator = function (_ViewNavigator) {

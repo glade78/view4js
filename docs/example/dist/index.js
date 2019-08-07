@@ -831,9 +831,9 @@
 
           var _titleTxt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Please select any item";
 
-          var radioGrpEl = '\n        <div class="grouped fields">\n            <label>' + _titleTxt + '</label>\n            ' + _dp.map(function (menuitem, i) {
-              return '<div class="field">\n                <div class="ui radio checkbox" data-value="' + menuitem.value + '" data-index="' + i + '">\n                    <input type="radio" name="' + _grpName + '" tabindex="0" class="hidden">\n                    <label>' + menuitem.label + '</label>\n                </div>\n            </div>';
-          }).join(' ') + '\n        </div>\n        ';
+          var radioGrpEl = '\n        <div class="ui form">\n        <div class="grouped fields">\n            <label>' + _titleTxt + '</label>\n            ' + _dp.map(function (menuitem, i) {
+              return '<div class="field">\n                <div class="ui radio checkbox" data-value="' + menuitem.value + '" data-index="' + i + '">\n                    <input type="radio" name="' + _grpName + '" tabindex="0" class="hidden">\n                    <label>' + menuitem.label + '</label>\n                </div>\n            </div></br>';
+          }).join(' ') + '\n        </div>\n        </div>\n        ';
           return radioGrpEl;
       };
 
@@ -2524,13 +2524,15 @@
               this.selectedItem = this.dataProvider[_index];
 
               //Remove Old Selected RadioButton
-              var oldRdEl = this.componentElement.querySelector(".checked");
-              if (oldRdEl != null) {
-                  oldRdEl.classList.remove("checked");
-                  //let tmpOldRdInput = oldRdEl.querySelector("input");
-                  //tmpOldRdInput.checked = false;
-                  //tmpOldRdInput.removeAttribute("checked","");
+              var oldRdElzlist = this.componentElement.querySelectorAll(".checked");
+              for (var i = 0; i < oldRdElzlist.length; i++) {
+                  oldRdElzlist[i].classList.remove("checked");
               }
+
+              //let tmpOldRdInput = oldRdEl.querySelector("input");
+              //tmpOldRdInput.checked = false;
+              //tmpOldRdInput.removeAttribute("checked","");
+
 
               //Add Selected Item in ItemList of Dropdown Menu
               var newRdEl = this.componentElement.querySelector('[data-index="' + _index + '"]');
@@ -2770,8 +2772,8 @@
                       {label:"Twice a day",value:4}
                   ];
                   rdGrp.init(radioGrpDp,"example2","How Often you eat Apple");
-                  rdGrp.attach();
-                  //rdGrp.changeSelectedItem(2);*/
+                  rdGrp.attach();*/
+                  //rdGrp.changeSelectedItem(2);
 
                   SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
           };

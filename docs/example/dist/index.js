@@ -2527,15 +2527,17 @@
               var oldRdEl = this.componentElement.querySelector(".checked");
               if (oldRdEl != null) {
                   oldRdEl.classList.remove("checked");
-                  var tmpOldRdInput = oldRdEl.querySelector("input");
-                  tmpOldRdInput.setAttribute("checked", "");
+                  //let tmpOldRdInput = oldRdEl.querySelector("input");
+                  //tmpOldRdInput.checked = false;
+                  //tmpOldRdInput.removeAttribute("checked","");
               }
 
               //Add Selected Item in ItemList of Dropdown Menu
               var newRdEl = this.componentElement.querySelector('[data-index="' + _index + '"]');
               newRdEl.classList.add('checked');
               var tmpNewRdInput = newRdEl.querySelector("input");
-              tmpNewRdInput.setAttribute("checked", "checked");
+              tmpNewRdInput.checked = true;
+              //tmpNewRdInput.setAttribute("checked","checked");
 
               // Dispatch Change Event 
               this.dispatchEvent(view4js.EventUtils.CHANGE, this);
@@ -2760,14 +2762,16 @@
                   var rdGrpPanelEl = view4js.ElementUtils.container("radioButtonPanel");
                   SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
 
-                  var rdGrp = new RadioButtonGroup("usrRadioGrp", this.id, "radioButtonPanel", true);
-                  var radioGrpDp = [{ label: "Once a week", value: 1 }, { label: "2-3 times a week", value: 2 }, { label: "Once a day", value: 3 }, { label: "Twice a day", value: 4 }];
-                  rdGrp.init(radioGrpDp, "foodIntactRdGrp", "How Often you eat Apple");
+                  /*let rdGrp = new RadioButtonGroup("usrRadioGrp",this.id,"radioButtonPanel",true);
+                  let radioGrpDp = [
+                      {label:"Once a week",value:1},
+                      {label:"2-3 times a week",value:2},
+                      {label:"Once a day",value:3},
+                      {label:"Twice a day",value:4}
+                  ];
+                  rdGrp.init(radioGrpDp,"example2","How Often you eat Apple");
                   rdGrp.attach();
-                  rdGrp.changeSelectedItem(2);
-                  rdGrp.addEventListener(view4js.EventUtils.CHANGE, function (e) {
-                          _this2.handleDropdwnClick(e);
-                  });
+                  //rdGrp.changeSelectedItem(2);*/
 
                   SemanticUILayoutUtil.ADD_HIDDEN_DIVIDER(rdGrpPanelEl);
           };
